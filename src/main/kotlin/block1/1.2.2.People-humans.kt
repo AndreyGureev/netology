@@ -6,13 +6,11 @@ fun main() {
     while (true) {
         print("Введите число лайков: ")
         try {
-            val likes = readLine()?.toInt() ?: return
-            if (((likes == 1 || likes % 10 == 1) && likes % 100 != 11) && likes != 11) {
+            val likes = readLine()!!.toUInt()
+            if (likes % 10U == 1U && likes % 100U != 11U)
                 println("Понравилось $likes человеку")
-            } else {
-                println("Понравилось $likes людям")
-            }
-            if (likes < 0) {
+            else println("Понравилось $likes людям")
+            if (likes < 0U) {
                 println("Не верный ввод данных, введите положительное число!")
             }
         } catch (e: Exception) {
