@@ -7,15 +7,10 @@ fun main() {
         print("Введите число лайков: ")
         try {
             val likes = readLine()?.toInt() ?: return
-            if (likes % 2 == 0 ||
-                likes % 3 == 0 ||
-                likes % 5 == 0 ||
-                likes % 7 == 0 ||
-                likes % 11 == 1
-                    ) {
-                println("Понравилось $likes людям")
-            } else {
+            if (((likes == 1 || likes % 10 == 1) && likes % 100 != 11) && likes != 11) {
                 println("Понравилось $likes человеку")
+            } else {
+                println("Понравилось $likes людям")
             }
             if (likes < 0) {
                 println("Не верный ввод данных, введите положительное число!")
