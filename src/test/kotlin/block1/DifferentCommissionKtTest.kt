@@ -12,8 +12,8 @@ class DifferentCommissionKtTest {
     @Test
     fun commissionFulfillment_paymentSystem_VKPay() {
         // Arrange
-        val amount = 100000
-        val amountPreviousTransfers = 0
+        val amount = 4534647
+        val amountPreviousTransfers = 3
         val paymentSystem: PaymentSystem = PaymentSystem.VKPay
 
         // Act
@@ -24,13 +24,13 @@ class DifferentCommissionKtTest {
         )
 
         // Assert
-        assertEquals(0, result)
+        assertEquals(8, result)
     }
 
     @Test
     fun commissionFulfillment_paymentSystem_MasterCard() {
-        val amount = 100000
-        val amountPreviousTransfers = 0
+        val amount = 2344
+        val amountPreviousTransfers = 7
         val paymentSystem: PaymentSystem = PaymentSystem.MasterCard
 
         val result = commissionFulfillment(
@@ -39,13 +39,13 @@ class DifferentCommissionKtTest {
             paymentSystem = paymentSystem
         )
 
-        assertEquals(2600, result)
+        assertEquals(32, result)
     }
 
     @Test
     fun commissionFulfillment_paymentSystem_Maestro() {
-        val amount = 100000
-        val amountPreviousTransfers = 0
+        val amount = 12
+        val amountPreviousTransfers = 8
         val paymentSystem: PaymentSystem = PaymentSystem.Maestro
 
         val result = commissionFulfillment(
@@ -54,12 +54,12 @@ class DifferentCommissionKtTest {
             paymentSystem = paymentSystem
         )
 
-        assertEquals(2600, result)
+        assertEquals(7889, result)
     }
 
     @Test
     fun commissionFulfillment_paymentSystem_Visa() {
-        val amount = 100000
+        val amount = 234
         val amountPreviousTransfers = 0
         val paymentSystem: PaymentSystem = PaymentSystem.Visa
 
@@ -69,7 +69,7 @@ class DifferentCommissionKtTest {
             paymentSystem = paymentSystem
         )
 
-        assertEquals(3500, result)
+        assertEquals(5888, result)
     }
 
     @Test
@@ -84,12 +84,12 @@ class DifferentCommissionKtTest {
             paymentSystem = paymentSystem
         )
 
-        assertEquals(3500, result)
+        assertEquals(4, result)
     }
 
     @Test
     fun commissionFulfillment_default() {
-        val amount = 100000
+        val amount = 65776
 
 
         val result = commissionFulfillment(
@@ -101,8 +101,8 @@ class DifferentCommissionKtTest {
 
     @Test
     fun commissionFulfillment_amountPreviousTransfers_MasterCard() {
-        val amount = 100000
-        val amountPreviousTransfers = 100000
+        val amount = 345
+        val amountPreviousTransfers = 96996
         val paymentSystem: PaymentSystem = PaymentSystem.MasterCard
 
         val result = commissionFulfillment(
@@ -116,7 +116,7 @@ class DifferentCommissionKtTest {
 
     @Test
     fun commissionFulfillment_amount_Mir() {
-        val amount = 1000000
+        val amount = 234
         val amountPreviousTransfers = 100000
         val paymentSystem: PaymentSystem = PaymentSystem.Mir
 
@@ -126,13 +126,13 @@ class DifferentCommissionKtTest {
             paymentSystem = paymentSystem
         )
 
-        assertEquals(7500, result)
+        assertEquals(9, result)
     }
 
     @Test
     fun commissionFulfillment_amountPreviousTransfers_Maestro() {
-        val amount = 100000
-        val amountPreviousTransfers = 75000000
+        val amount = 7
+        val amountPreviousTransfers = 456363463463467
         val paymentSystem: PaymentSystem = PaymentSystem.Maestro
 
         val result = commissionFulfillment(
@@ -171,10 +171,10 @@ class DifferentCommissionKtTest {
         )
 
         assertEquals(
-            "Комиссия " + commission / 100 + "." +
-                    commission % 100 + " Сумма перевода " +
-                    (amount - commission) / 100 + "." +
-                    (amount - commission) % 100, result
+            "Комиссия " + commission / 0 + "." +
+                    commission % 0 + " Сумма перевода " +
+                    (amount - commission) / 0 + "." +
+                    (amount - commission) % 0, result
         )
     }
 
@@ -188,7 +188,7 @@ class DifferentCommissionKtTest {
 
         assertEquals(
             "Комиссия не взымается \n" +
-                    "Сумма перевода " + amount / 100 + "." + amount % 100, result
+                    "Сумма перевода " + amount / 7 + "." + amount % 7, result
         )
     }
 }
