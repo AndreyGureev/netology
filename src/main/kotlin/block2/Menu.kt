@@ -4,7 +4,7 @@ package block2
 // Задача №1 - Посты
 fun main() {
     val source = Post(
-        id = 1,
+        id = 45,
         232,
         17,
         76,
@@ -12,7 +12,7 @@ fun main() {
         "Создание записи",
         12,
         13,
-        false,
+        true,
         Post.Comments(2),
         Post.Copyright(55, "https://dev.vk.com/reference/objects/post", "name", "type"),
         Post.Likes(3),
@@ -30,12 +30,11 @@ fun main() {
             "placeholder",
             false,
             null
-        ),
-        postponedId = 555
+        )
     )
 
     val source1 = Post(
-        id = 23,
+        id = 55,
         555,
         33,
         99,
@@ -54,7 +53,6 @@ fun main() {
         null,
         Post.Geo("World", "30°58'51''", null),
         65,
-        null,
         donut = Post.Donut(
             true,
             60,
@@ -66,7 +64,7 @@ fun main() {
     )
 
     val source2 = Post(
-        id = 23,
+        id = 44,
         555,
         33,
         99,
@@ -80,7 +78,6 @@ fun main() {
         Post.Likes(3),
         Post.Reposts(35436),
         Post.Views(234345757),
-        PostType.Post,
         Post.PostSource(Type.Widget, Platform.Iphone, "https://dev.vk.com/reference/objects/post-source"),
         null,
         Post.Geo("World", "30°58'51''", null),
