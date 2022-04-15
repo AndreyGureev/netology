@@ -5,43 +5,43 @@ package block2
 object WallService {
     private var posts = emptyArray<Post>()
 
-    fun add(wall: Post): Post {
-        val post = wall.copy(id = generationId())
-        posts += post
+    fun add(post: Post): Post {
+        val wall = post.copy(id = generationId())
+        posts += wall
 //        println(posts.last())
         return posts.last()
     }
 
-    fun update(wall: Post): Boolean {
-        for ((index, post) in posts.withIndex()) {
-            if (post.id == wall.component1()) {
-                posts[index] = post.copy(
-                    fromId = wall.fromId,
-                    createdBy = wall.createdBy,
-                    text = wall.text,
-                    replyOwnerId = wall.replyOwnerId,
-                    replyPostId = wall.replyPostId,
-                    friendsOnly = wall.friendsOnly,
-                    comments = wall.comments,
-                    copyright = wall.copyright,
-                    likes = wall.likes,
-                    reposts = wall.reposts,
-                    views = wall.views,
-                    postType = wall.postType,
-                    signerId = wall.signerId,
-                    canPin = wall.canPin,
-                    canDelete = wall.canDelete,
-                    canEdit = wall.canEdit,
-                    isPinned = wall.isPinned,
-                    markedAsAds = wall.markedAsAds,
-                    isFavorite = wall.isFavorite,
-                    postponedId = wall.postponedId,
-                    postSource = wall.postSource,
-                    geo = wall.geo,
-                    copyHistory = wall.copyHistory,
-                    attachments = postNext.attachments
+    fun update(post: Post): Boolean {
+        for ((index, wall) in posts.withIndex()) {
+            if (wall.id == wall.component1()) {
+                posts[index] = wall.copy(
+                    fromId = post.fromId,
+                    createdBy = post.createdBy,
+                    text = post.text,
+                    replyOwnerId = post.replyOwnerId,
+                    replyPostId = post.replyPostId,
+                    friendsOnly = post.friendsOnly,
+                    comments = post.comments,
+                    copyright = post.copyright,
+                    likes = post.likes,
+                    reposts = post.reposts,
+                    views = post.views,
+                    postType = post.postType,
+                    signerId = post.signerId,
+                    canPin = post.canPin,
+                    canDelete = post.canDelete,
+                    canEdit = post.canEdit,
+                    isPinned = post.isPinned,
+                    markedAsAds = post.markedAsAds,
+                    isFavorite = post.isFavorite,
+                    postponedId = post.postponedId,
+                    postSource = post.postSource,
+                    geo = post.geo,
+                    copyHistory = post.copyHistory,
+                    attachments = post.attachments
                 )
-//                println(posts[index])
+                println(posts[index])
                 return true
             }
         }
