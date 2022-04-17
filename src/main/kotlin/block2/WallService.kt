@@ -1,62 +1,60 @@
-@file:Suppress("NAME_SHADOWING")
-
 package block2
 
-object WallService {
+class PostNotFoundException(message: String) : RuntimeException(message)
+class WallService {
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
+
+    fun createComment(comment: Comment) {
+        for (anyPost in posts) {
+            if (anyPost.id == comment.postId) {
+                comments += comment
+            }
+
+        }
+        throw PostNotFoundException("There is no such post")
+    }
+
+    fun getPostComments(post: Post): String {
+        var commentsString = ""
+        for (comment in comments) {
+            if (comment.replyToComment == post.id) {
+                commentsString += comment.message
+            }
+        }
+        return commentsString
+    }
 
     fun add(post: Post): Post {
-        val wall = post.copy(id = generationId())
-        posts += wall
+        posts += if (posts.isEmpty()) {
+            post.copy(id = 1)
+        } else post.copy(id = posts.last().id + 1)
 //        println(posts.last())
         return posts.last()
     }
 
     fun update(post: Post): Boolean {
-        for ((index, wall) in posts.withIndex()) {
-            if (wall.id == wall.component1()) {
-                posts[index] = wall.copy(
-                    fromId = post.fromId,
-                    createdBy = post.createdBy,
-                    text = post.text,
-                    replyOwnerId = post.replyOwnerId,
-                    replyPostId = post.replyPostId,
-                    friendsOnly = post.friendsOnly,
-                    comments = post.comments,
-                    copyright = post.copyright,
-                    likes = post.likes,
-                    reposts = post.reposts,
-                    views = post.views,
-                    postType = post.postType,
-                    signerId = post.signerId,
-                    canPin = post.canPin,
-                    canDelete = post.canDelete,
-                    canEdit = post.canEdit,
-                    isPinned = post.isPinned,
-                    markedAsAds = post.markedAsAds,
-                    isFavorite = post.isFavorite,
-                    postponedId = post.postponedId,
-                    postSource = post.postSource,
-                    geo = post.geo,
-                    copyHistory = post.copyHistory,
-                    attachments = post.attachments
+        for ((index, somePost) in posts.withIndex()) {
+            if (somePost.id == post.id) {
+                posts[index] = post.copy(
+                    ownerId = somePost.ownerId,
+                    date = somePost.date
                 )
-                println(posts[index])
+//                println(posts[index])
                 return true
             }
         }
         return false
     }
 
-    private var memoryIdPost: Int = 1
+    fun getLastPostId(): Int = if (posts.isEmpty()) 0 else posts.last().id
 
-    private fun generationId(): Int {
-        memoryIdPost += 1
-        return memoryIdPost - 1
-    }
-
-    fun clearArr() {
-        posts = emptyArray()
-        memoryIdPost = 1
+    fun findPostById(id: Int): Post? {
+        for ((index, currentPost) in posts.withIndex()) {
+            if (currentPost.id == id) {
+                return posts[index]
+            }
+        }
+        return null
     }
 }
