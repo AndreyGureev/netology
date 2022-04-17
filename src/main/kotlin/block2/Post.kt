@@ -1,117 +1,88 @@
 package block2
 
-import block2.Attachment.Attachments
-
-enum class PostType {
-    Post, Copy, Reply, Postpone, Suggest
-}
-
-enum class Type {
-    Vk, Widget, Api, Rss, Sms
-}
-
-enum class Platform {
-    Android, Iphone, WPhone
-}
+import block2.Attachment.Attachment
 
 data class Post(
-    val id: Int,
-    val ownerId: Int,
-    val fromId: Int,
-    val createdBy: Int,
-    val date: Int,
-    val text: String,
-    val replyOwnerId: Int,
-    val replyPostId: Int,
+    val id: Int = 0,
+    val ownerId: Int = 0,
+    val fromId: Int = 0,
+    val createdBy: Int? = null,
+    val date: Long = 0,
+    val text: String = "No text",
+    val replyOwnerId: Int? = null,
+    val replyPostId: Int? = null,
     val friendsOnly: Boolean = false,
-    val comments: Comments,
-    val copyright: Copyright,
-    val likes: Likes,
-    val reposts: Reposts,
-    val views: Views,
-    val postType: PostType,
-    val postSource: PostSource,
-    val attachments: Array<Attachments>?,
-    val geo: Geo,
-    val signerId: Int,
-    val copyHistory: Array<Post>?,
+    val comments: Comments = Comments(),
+    val copyright: String = "ru.netology (c)",
+    val likes: Likes = Likes(),
+    val reposts: Reposts = Reposts(),
+    val views: Views = Views(),
+    val postType: String = "post",
+    val postSource: PostSource? = null,
+    val attachments: Array<Attachment>? = null,
+    val geo: Geo? = null,
+    val signerId: Int? = null,
+    val copyHistory: ArrayList<Post>? = null,
     val canPin: Boolean = false,
-    val canDelete: Boolean = false,
-    val canEdit: Boolean = false,
+    val canDelete: Boolean = true,
+    val canEdit: Boolean = true,
     val isPinned: Boolean = false,
-    val markedAsAds: Boolean = true,
-    val isFavorite: Boolean = true,
-    val donut: Donut,
-    val postponedId: Int
-) {
-    data class Comments(
-        val count: Int,
-        val canPost: Boolean = true,
-        val groupsCanPost: Boolean = true,
-        val canClose: Boolean = true,
-        val canOpen: Boolean = true
-    )
+    val markedAsAds: Boolean = false,
+    val isFavorite: Boolean = false,
+    val postponedId: Int = 0
+)
 
-    data class Copyright(
-        val id: Int,
-        val link: String,
-        val name: String,
-        val type: String
-    )
 
-    data class Likes(
-        val count: Int,
-        val userLikes: Boolean = true,
-        val canLike: Boolean = true,
-        val canPublish: Boolean = false
-    )
 
-    data class Reposts(
-        val count: Int,
-        val userReposted: Boolean = false
-    )
+data class PostSource(
+    val type: String = "",
+    val platform: String = "",
+    val data: String = "",
+    val url: String = ""
+)
 
-    data class Views(
-        val count: Int,
-    )
 
-    data class PostSource(
-        val type: Type,
-        val platform: Platform,
-        val url: String
-    )
+data class Geo(
+    val type: String = "",
+    val coordinates: String = "",
+    val place: Place = Place()
+)
 
-    data class Geo(
-        val type: String,
-        val coordinates: String,
-        val place: Place?
-    ) {
-        data class Place(
-            val id: Int,
-            val title: String,
-            val latitude: Int,
-            val longitude: Int,
-            val created: Int,
-            val icon: String,
-            val checkins: Int,
-            val updated: Int,
-            val type: Int,
-            val country: Int,
-            val city: Int,
-            val address: String
-        )
-    }
+data class Place(
+    val id: Int = 0,
+    val title: String = "",
+    val latitude: Int = 0,
+    val longitude: Int = 0,
+    val created: Int = 0,
+    val icon: String = "",
+    val checkins: Int = 0,
+    val updated: Int = 0,
+    val type: Int = 0,
+    val country: Int = 0,
+    val city: Int = 0,
+    val address: String = ""
+)
 
-    data class Donut(
-        val isDonut: Boolean,
-        val paidDuration: Int,
-        val placeholder: String,
-        val canPublishFreeCopy: Boolean,
-        val editMode: EditMode?
-    ) {
-        data class EditMode(
-            val all: String,
-            val duration: String
-        )
-    }
-}
+data class Views(
+    val count: Int = 0
+)
+
+data class Likes(
+    val count: Int = 0,
+    val userLikes: Boolean = true,
+    val canLike: Boolean = true,
+    val canPublish: Boolean = true
+)
+
+data class Reposts(
+    val count: Int = 0,
+    val userReposted: Boolean = false
+)
+
+data class Comments(
+    val count: Int = 0,
+    val canPost: Boolean = true,
+    val groupsCanPost: Boolean = true,
+    val canClose: Boolean = false,
+    val canOpen: Boolean = true
+)
