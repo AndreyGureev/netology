@@ -1,103 +1,59 @@
 package block2
 
+import block2.Attachment.*
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
+object WallServiceMain {
+    val service = WallService()
+}
+
 // «2.2. ООП: Объекты и классы»
 // Задача №1 - Посты
 fun main() {
-    val source = Post(
-        id = 1,
-        232,
-        17,
-        76,
-        20220406,
-        "Создание записи",
-        12,
-        13,
-        false,
-        Post.Comments(2),
-        Post.Copyright(55, "https://dev.vk.com/reference/objects/post", "name", "type"),
-        Post.Likes(3),
-        Post.Reposts(35436),
-        Post.Views(234345757),
-        PostType.Post,
-        Post.PostSource(Type.Widget, Platform.Iphone, "https://dev.vk.com/reference/objects/post-source"),
-        null,
-        Post.Geo("World", "30°58'51''", null),
-        65,
-        null,
-        donut = Post.Donut(
-            true,
-            60,
-            "placeholder",
-            false,
-            null
-        ),
-        postponedId = 555
+
+    val attachment: Attachment = AttachmentLink(
+
+        attachmentContent = Link(
+            url = "www.netology.ru", title = "Курсы языка Kotlin", "", "",
+            product = LinkProduct(
+                LinkProduct.Price(
+                    60_000,
+                    LinkProduct.Currency(1, "RUB (рубль)"), text = "цена"
+                ),
+            )
+        )
+    )
+    WallServiceMain.service.add(
+        Post(
+            date = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC),
+            text = "Добро пожаловать на наш курс",
+            attachments = arrayOf(attachment)
+        )
     )
 
-    val source1 = Post(
-        id = 23,
-        555,
-        33,
-        99,
-        20220406,
-        "Создание записи G",
-        12,
-        13,
-        false,
-        Post.Comments(2),
-        Post.Copyright(55, "https://dev.vk.com/reference/objects/post", "name", "type"),
-        Post.Likes(3),
-        Post.Reposts(35436),
-        Post.Views(234345757),
-        PostType.Post,
-        Post.PostSource(Type.Widget, Platform.Iphone, "https://dev.vk.com/reference/objects/post-source"),
-        null,
-        Post.Geo("World", "30°58'51''", null),
-        65,
-        null,
-        donut = Post.Donut(
-            true,
-            60,
-            "placeholder",
-            false,
-            null
-        ),
-        postponedId = 555
-    )
+    WallServiceMain.service.findPostById(WallServiceMain.service.getLastPostId())?.let { postPrint(it) }
 
-    val source2 = Post(
-        id = 23,
-        555,
-        33,
-        99,
-        20220406,
-        "Создание записи X",
-        12,
-        13,
-        false,
-        Post.Comments(2),
-        Post.Copyright(55, "https://dev.vk.com/reference/objects/post", "name", "type"),
-        Post.Likes(3),
-        Post.Reposts(35436),
-        Post.Views(234345757),
-        PostType.Post,
-        Post.PostSource(Type.Widget, Platform.Iphone, "https://dev.vk.com/reference/objects/post-source"),
-        null,
-        Post.Geo("World", "30°58'51''", null),
-        65,
-        null,
-        donut = Post.Donut(
-            true,
-            60,
-            "placeholder",
-            false,
-            null
-        ),
-        postponedId = 555
-    )
+}
 
-    WallService.add(source1)
-    WallService.add(source2)
 
-    print(WallService.update(source))
+fun postPrint(post: Post) {
+    println(post.text)
+    for ((index, att) in post.attachments?.withIndex()!!) {
+        when (att) {
+            is AttachmentLink -> {
+                println(att.attachmentContent.title)
+                println("Приходите к нам ${att.attachmentContent.url}")
+                println(
+                    "Цена составляет ${att.attachmentContent.product?.price?.amount} " +
+                            "${att.attachmentContent.product?.price?.currency?.name} !"
+                )
+            }
+            is AttachmentVideo -> println("Смотрите")
+            is AttachmentDoc -> println("Читайте")
+            is AttachmentPhoto -> println("Смотрите")
+            is AttachmentAudio -> println("Слушайте")
+        }
+    }
+    println("copyright ${post.copyright}")
 }
